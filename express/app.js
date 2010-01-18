@@ -10,6 +10,7 @@ configure(function(){
 })
 
 get('/', function(){
+  this.contentType('html')
   return '<h1>Hello World<h1>'
 })
 

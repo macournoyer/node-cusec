@@ -6,13 +6,12 @@ http.createServer(function (req, res) {
 
   if (req.uri.path == "/slow") {
     // Send body in 5 sec
-    res.sendBody('Waiting ...\n');
+    res.sendBody('Waiting 5 sec ...\n');
     // Some padding for browser to stop buffering
-    for (var i=0; i < 1024; i++) {
-      res.sendBody(' ');
-    }
+    for (var i=0; i < 1024; i++) res.sendBody(' ');
+    
     setTimeout(function () {
-      res.sendBody('Sloooow!');
+      res.sendBody('Done!');
       res.finish();
     }, 5000);
   
