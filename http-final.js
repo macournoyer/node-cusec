@@ -4,7 +4,7 @@ var sys = require('sys'),
 http.createServer(function (req, res) {
   res.sendHeader(200, {'Content-Type': 'text/plain'});
 
-  if (req.uri.path == "/slow") {
+  if (req.url == "/slow") {
     // Send body in 5 sec
     res.sendBody('Waiting 5 sec ...\n');
     // Some padding for browser to stop buffering
