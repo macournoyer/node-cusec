@@ -9,7 +9,7 @@ $(function(){
   });
   
   // Longpoll
-  (function poll(){
+  function poll(){
     $.getJSON('/chat/poll', function(messages){
       // A new message arrived!
       $("#log").empty();
@@ -21,5 +21,8 @@ $(function(){
       // Start polling again
       poll();
     });
-  })();
+  }
+  
+  poll();
+  
 });
