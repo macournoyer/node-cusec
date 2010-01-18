@@ -1,0 +1,9 @@
+%h1 Say something ...
+
+#log
+  :each msg in messages
+    %p= msg
+
+%form
+  %input#message{ type: 'text', name: 'message' }
+  %input{ type: 'submit', value: 'Send' }
