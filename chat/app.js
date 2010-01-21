@@ -3,7 +3,6 @@ require('express');
 require('express/plugins');
 
 configure(function(){
-  use(MethodOverride);
   use(ContentLength);
   use(CommonLogger);
   set('root', dirname(__filename));
