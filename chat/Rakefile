@@ -1,0 +1,4 @@
+task :failsafe do
+  cp ".app.js", "app.js"
+  cp "public/.chat.js", "public/chat.js"
+end
