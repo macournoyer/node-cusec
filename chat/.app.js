@@ -1,52 +1,51 @@
 require.paths.unshift('/Users/ma/projects/express/lib');
-require('express')
-require('express/plugins')
+require('express');
+require('express/plugins');
 
 configure(function(){
-  use(MethodOverride)
-  use(ContentLength)
-  use(CommonLogger)
-  set('root', dirname(__filename))
-})
+  use(ContentLength);
+  use(CommonLogger);
+  set('root', dirname(__filename));
+});
+
 
 get('/', function(){
-  this.contentType('html')
-  return '<h1>Hello World<h1>'
-})
+  return 'Hello World';
+});
 
-var messages = []
+get('/chat', function(){
+  this.render('chat.haml.html');
+});
 
-get('/chat', function(id) {
-  this.render('chat.haml.html', { locals: { messages: messages } })
-})
+var messages = [];
 
 post('/chat', function(){
-  messages.push(escape(this.param('message')))
-  this.halt(200)
-})
+  messages.push(this.param('message'));
+  puts(messages);
+  this.halt(200);
+});
 
-get('/chat/poll', function(){
-  var self = this, previousLength = messages.length
+get('/poll', function(){
+  var lastLength = messages.length;
+  var that = this;
   
   var timer = setInterval(function(){
-    if (messages.length > previousLength) {
-      self.contentType('json')
-      previousLength = messages.length
-      
-      // We send the response
-      self.halt(200, JSON.encode(messages))
-      
-      clearInterval(timer)
-    }
-  }, 100)
-})
+    if (messages.length > lastLength) {
+      that.contentType("json");
+      that.halt(200, JSON.encode(messages));
+      clearInterval(timer);
+    };
+  }, 100);
+});
 
+
+// Serve assets
 get('/*.css', function(file){
-  this.render(file + '.sass.css', { layout: false })
-})
-
+  this.render(file + '.sass.css', { layout: false });
+});
 get('/*.js', function(file){
-  this.sendfile(dirname(__filename) + '/public/' + file + '.js')
-})
+  this.sendfile(dirname(__filename) + '/public/' + file + '.js');
+});
 
-run()
+// Run the app
+run();
